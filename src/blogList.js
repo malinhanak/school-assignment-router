@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Route, Link } from 'react-router-dom';
 import GET_ENTRIES from './logic/getEntries';
+import BlogPostDetail from './BlogPostDetail'
 
 class Blog extends Component {
 constructor() {
@@ -30,14 +32,14 @@ constructor() {
     const mapPosts = this.state.posts.map((entry, i) => {
         if(this.state.showPost !== null && this.state.showPost === i) {
           return (
-            <section  onClick={() => this.onClickPost(i)} key={i}>
-                <h1>{entry.Title}</h1>
+            <section key={i} entry={entry}>
+                <Link to={`/blog/topidID=${i}`}><h1>{entry.Title}</h1></Link>
                 <article>{entry.Text}</article>
             </section>
           )
         } else if (this.state.showPost === null) {
           return (
-            <section  onClick={() => this.onClickPost(i)} key={i}>
+            <section key={i} entry={entry}>
                 <h1>{entry.Title}</h1>
                 <article>{entry.Text}</article>
             </section>
@@ -47,7 +49,11 @@ constructor() {
         }
 
     })
-      return (<div>{mapPosts}</div>
+      return (
+        <div>
+          {mapPosts}
+          <Route path='/blog' component={BlogPostDetail}/>
+        </div>
       );
     }
   }
