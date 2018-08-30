@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import GET_ENTRIES from './logic/getEntries';
+import { Link } from 'react-router-dom';
+import CategoryList from './Categories';
+
 
 class Blog extends Component {
 constructor() {
@@ -10,44 +13,32 @@ constructor() {
   }
 }
   componentDidMount() {
-    GET_ENTRIES()
+    const cat = this.props.category;
+    GET_ENTRIES(cat)
     .then((blogposts) => {
       this.setState({
         posts: blogposts,
-        showPost: null,
       })
     })
-  }
-  onClickPost(index){
-    if(this.state.showPost === null) {
-      this.setState({ showPost: index });
-    } else {
-      this.setState({ showPost: null });
-    }
   }
 
   render() {
     const mapPosts = this.state.posts.map((entry, i) => {
-        if(this.state.showPost !== null && this.state.showPost === i) {
-          return (
-            <section  onClick={() => this.onClickPost(i)} key={i}>
-                <h1>{entry.Title}</h1>
-                <article>{entry.Text}</article>
+        return (
+            <section key={i}>
+                <Link to={`/details/${i}`}><h1>{entry.Title}</h1></Link>
+                <article>{entry.Entry}</article>
             </section>
           )
-        } else if (this.state.showPost === null) {
-          return (
-            <section  onClick={() => this.onClickPost(i)} key={i}>
-                <h1>{entry.Title}</h1>
-                <article>{entry.Text}</article>
-            </section>
-          )
-        } else {
-          return null;
-        }
-
     })
-      return (<div>{mapPosts}</div>
+      return (
+        <main>
+          <div id="Blogpost">
+            {mapPosts}
+          </div>
+          <aside><CategoryList /></aside>
+        </main>
+        
       );
     }
   }
