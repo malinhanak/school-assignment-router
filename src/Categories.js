@@ -15,7 +15,6 @@ class CategoryList extends Component {
             this.setState({
                 cat: categories
             })
-            console.log('this state: ', categories)
           })
           
         }

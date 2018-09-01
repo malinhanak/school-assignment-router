@@ -61,6 +61,7 @@ main {
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
+  margin-bottom: 50px;
 }
 #Blogpost {
   width:70%;
